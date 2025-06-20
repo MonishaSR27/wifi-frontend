@@ -12,7 +12,7 @@ function WiFiManager() {
   const changePassword = async () => {
     setStatus("loading");
     try {
-      const res = await axios.post(`${API}/change_password`, {
+      const res = await axios.post(`${API}/change-password`, {
         password: newPassword,
       });
       setMessage(res.data.message);
