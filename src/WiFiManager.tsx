@@ -12,8 +12,8 @@ function WiFiManager() {
   const changePassword = async () => {
     setStatus("loading");
     try {
-      const res = await axios.post(`${API}/change-password`, {
-        password: newPassword,
+      const res = await axios.post(`${API}/change_password`, {
+        new_password: newPassword,
       });
       setMessage(res.data.message);
       setStatus("success");
@@ -37,7 +37,7 @@ function WiFiManager() {
 
   const fetchDevices = async () => {
     try {
-      const res = await axios.get(`${API}/devices`);
+      const res = await axios.get(`${API}/connected_devices`);
       setDevices(res.data.devices);
     } catch (err) {
       setMessage("Error fetching devices");
