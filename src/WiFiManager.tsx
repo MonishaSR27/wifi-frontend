@@ -6,13 +6,11 @@ function WiFiManager() {
   const [devices, setDevices] = useState<any[]>([]);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [actionType, setActionType] = useState<"change" | "reboot" | "">("");
 
-  const API = "https://wifi-backend-4rpz.onrender.com"; // Replace with your deployed backend
+  const API = "https://wifi-backend-4rpz.onrender.com"; // Your deployed backend URL
 
   const changePassword = async () => {
     setStatus("loading");
-    setActionType("change");
     try {
       const res = await axios.post(`${API}/change_password`, {
         password: newPassword,
@@ -27,7 +25,6 @@ function WiFiManager() {
 
   const rebootRouter = async () => {
     setStatus("loading");
-    setActionType("reboot");
     try {
       const res = await axios.post(`${API}/reboot`);
       setMessage(res.data.message);
