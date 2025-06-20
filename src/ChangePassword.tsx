@@ -11,7 +11,7 @@ const ChangePassword: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/change-password", {
+      const response = await fetch("http://127.0.0.1:5000/change_password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

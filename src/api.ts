@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:5000';
+const BASE_URL = "https://wifi-backend-4rpz.onrender.com";
 
 export const changePassword = async (newPassword: string) => {
   const response = await fetch(`${BASE_URL}/change_password`, {

@@ -5,30 +5,42 @@ function WiFiManager() {
   const [newPassword, setNewPassword] = useState("");
   const [devices, setDevices] = useState<any[]>([]);
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [actionType, setActionType] = useState<"change" | "reboot" | "">("");
+
+  const API = "https://wifi-backend-4rpz.onrender.com"; // Replace with your deployed backend
 
   const changePassword = async () => {
+    setStatus("loading");
+    setActionType("change");
     try {
-      const res = await axios.post("http://127.0.0.1:5000/change-password", {
+      const res = await axios.post(`${API}/change_password`, {
         password: newPassword,
       });
       setMessage(res.data.message);
+      setStatus("success");
     } catch (err) {
       setMessage("Error changing password");
+      setStatus("error");
     }
   };
 
   const rebootRouter = async () => {
+    setStatus("loading");
+    setActionType("reboot");
     try {
-      const res = await axios.post("http://127.0.0.1:5000/reboot");
+      const res = await axios.post(`${API}/reboot`);
       setMessage(res.data.message);
+      setStatus("success");
     } catch (err) {
       setMessage("Error rebooting router");
+      setStatus("error");
     }
   };
 
   const fetchDevices = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:5000/devices");
+      const res = await axios.get(`${API}/devices`);
       setDevices(res.data.devices);
     } catch (err) {
       setMessage("Error fetching devices");
@@ -93,9 +105,23 @@ function WiFiManager() {
           </ul>
         </div>
 
-        {/* Status Message */}
-        {message && (
-          <p className="text-center text-green-600 font-medium border-t pt-4">{message}</p>
+        {/* Status Feedback */}
+        {status === "loading" && (
+          <div className="text-center">
+            <p className="text-blue-500 font-medium">Processing...</p>
+            <img src="/spinner.gif" alt="Loading" className="w-12 mx-auto mt-2" />
+          </div>
+        )}
+        {status === "success" && (
+          <div className="text-center">
+            <p className="text-green-600 font-medium">{message}</p>
+            <img src="/success.png" alt="Success" className="w-20 mx-auto mt-2" />
+          </div>
+        )}
+        {status === "error" && (
+          <div className="text-center text-red-500 font-medium">
+            ❌ {message}
+          </div>
         )}
       </div>
     </div>
